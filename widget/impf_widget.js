@@ -70,7 +70,7 @@ var impfLoader = {
         iframe.height = cHeight;
         iframe.style.border = 'none';
         iframe.id = '__impf_widget_frame';
-        iframe.src = 'impf_widget_' + this._oid + '.html?tm=' + Math.random();
+        iframe.src = 'impf_widget_' + this._oid + '.html';
         this._container.appendChild(iframe);
         iframe.onload = function() {
             console.log('frame loaded');
