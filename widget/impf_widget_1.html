@@ -8,6 +8,7 @@
 		<meta name="theme-color" content="#fff">
 		<meta name="format-detection" content="telephone=no">
 		<link rel="stylesheet" media="all" href="css/app.css">
+		<script type="text/javascript" src="js/lib/l.min.js"></script>
 	</head>
 
 	<body>
@@ -573,14 +574,15 @@
 
 
 	<!-- BEGIN scripts -->
-	<script type="text/javascript" src="js/lib/jquery-1.11.3.min.js"></script>
-	<script type="text/javascript" src="js/lib/jquery.transit.min.js"></script>
-	<script type="text/javascript" src="js/lib/nouislider.min.js"></script>
-	<script type="text/javascript" src="js/lib/slick.min.js"></script>
-	<script type="text/javascript" src="js/lib/form-validator/jquery.form-validator.js"></script>
-	<script type="text/javascript" src="js/app.js"></script>
-	<script type="text/javascript" src="js/tmp.js"></script>
-	<script type="text/javascript" src="js/cc.js"></script>
+	<script type="text/javascript">
+		ljs.load('js/lib/jquery-1.11.3.min.js', function(){
+			ljs.load('js/lib/jquery.transit.min.js','js/lib/nouislider.min.js','js/lib/slick.min.js',function(){
+				ljs.load('js/lib/form-validator/jquery.form-validator.js', 'give/dist/js/app.js','js/tmp.js',function(){
+					ljs.load('js/cc.js')
+				})
+			})
+		});
+	</script>
 	<!-- END scripts -->
 </body>
 </html>
