@@ -498,6 +498,7 @@ $('.give-confirmation-container button').on('click', function() {
     $(this).parent().hide();
     $('.give-designate').hide();
     $('.give-widget-main-container').hide();
+    setAmount();
     $('#give-amount-bar').fadeIn(300);
     $('.give-payment-form').fadeIn(300);
 
