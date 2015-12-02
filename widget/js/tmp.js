@@ -537,7 +537,7 @@ $('.give-confirmation-container button').on('click', function() {
 
             onModulesLoaded : function() {
                 console.log('setupValidation init');
-                $.setupValidation(config);
+                $.setupValidation(validationConfig);
                 console.log('setupValidation end');
             }
         });
