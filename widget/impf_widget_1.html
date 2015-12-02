@@ -111,7 +111,7 @@
 							</div>
 						</div>
 
-						<div class="give-calculator">
+						<div class="give-calculator" style="display: none">
 							<div class="give-bar-container">
 								<div class="give-amount-bar _amount">
 									<span class="give-amount-bar__left-label">Your Donation:</span>
@@ -264,7 +264,7 @@
 						</div>
 					</div>
 
-					<div class="give-confirmation-container">
+					<div class="give-confirmation-container" style="display: none">
 						<div class="give-check-group">
 							<div class="give-check-group__row">
 								<label class="give-check _important">
@@ -299,7 +299,7 @@
 									<input class="give-check__input" type="checkbox">
 									<span class="give-check__text">In honor or memory of someone?</span>
 								</label>
-								<div class="give-in-memory-of">
+								<div class="give-in-memory-of" style="display: none">
 									<div class="give-field _simple">
 										<input class="give-field__input" type="text" placeholder="Enter name here">
 									</div>
@@ -575,13 +575,19 @@
 
 	<!-- BEGIN scripts -->
 	<script type="text/javascript">
-		ljs.load('js/lib/jquery-1.11.3.min.js', function(){
-			ljs.load('js/lib/jquery.transit.min.js','js/lib/nouislider.min.js','js/lib/slick.min.js',function(){
-				ljs.load('js/lib/form-validator/jquery.form-validator.js', 'js/app.js','js/tmp.js',function(){
-					ljs.load('js/cc.js')
+		setTimeout(function() {
+			ljs.load('js/lib/jquery-1.11.3.min.js', function () {
+				ljs.load('js/lib/jquery.transit.min.js', 'js/lib/nouislider.min.js', 'js/lib/slick.min.js', function () {
+					setTimeout(function () {
+						ljs.load(
+								'js/app.js',
+								'js/tmp.js',
+								'js/lib/form-validator/jquery.form-validator.js',
+								'js/cc.js')
+					}, 500);
 				})
 			})
-		});
+		}, 500);
 	</script>
 	<!-- END scripts -->
 </body>

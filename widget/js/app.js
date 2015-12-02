@@ -131,18 +131,6 @@ $('.give-icon._eye-closed').on('click', function(e) {
     }
 });
 
-// $('.give-payment-tabs').each(function(i, el) {
-//     var $el = $(el);
-//     var $tabs = $el.find('.give-payment-tabs__button');
-//     var $slides = $el.siblings('.give-payment-tabs-content').find('.give-payment-tabs-slide');
-
-//     $tabs.on('click', function(e) {
-//         var index = $(this).index();
-//         $slides.removeClass('is-active').eq(index).addClass('is-active');
-//         $tabs.removeClass('is-active').eq(index).addClass('is-active');
-//     });
-// });
-
 $('#show-thank').on('click', function(e) {
     var $msg = $('.give-thank');
     $msg.fadeToggle(500);
@@ -151,8 +139,7 @@ $('#show-thank').on('click', function(e) {
 
 $('.give-in-memory-of').each(function(i, el) {
     var field = $(el)
-    field.slideUp()
-        .parents('.give-check-group')
+    field.parents('.give-check-group')
         .find('input[type="checkbox"]:eq(1)')
         .on('change', function() {
             field.slideToggle();

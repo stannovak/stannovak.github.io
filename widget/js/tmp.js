@@ -2,29 +2,21 @@ var totalAmount = 0;
 var currentSlide = 'preset';
 var beforeCalcSlide = 'preset';
 
-(function() {
-    $('.give-confirmation-container').each(function(index, el) {
-        $(el).slideUp(0);
-    });
-    $('#show-thank').next().next().find('.give-confirmation-container').show();
+$('.give-presets__button[rel!=other]').on('click', function() {
+    totalAmount = parseInt($(this).attr('rel'));
+    setAmount();
+    $('.give-presets__button[rel!=other]').removeClass('is-active');
 
-    $('.give-presets__button[rel!=other]').on('click', function() {
-        totalAmount = parseInt($(this).attr('rel'));
-        setAmount();
-        $('.give-presets__button[rel!=other]').removeClass('is-active');
+    $(this).addClass('is-active');
+});
 
-        $(this).addClass('is-active');
-    });
-
-    $('.give-presets__button[rel!=other]').one('click', function() {
-         $(this)
-         .parents('.give-widget')
-         .find('.give-confirmation-container')
-         .slideDown(300)
-         .attr('rel','visible');
-    });
-})();
-
+$('.give-presets__button[rel!=other]').one('click', function() {
+     $(this)
+     .parents('.give-widget')
+     .find('.give-confirmation-container')
+     .slideDown(300)
+     .attr('rel','visible');
+});
 
 
 
@@ -305,7 +297,7 @@ var setAmount = function() {
 };
 
 var recalculateTotalAmount = function(step) {
-    if (step > totalAmount) {
+    if (step < 0 && totalAmount - Math.abs(step) <= 0) {
         console.log('Minimum limit was reached');
         return;
     }
@@ -348,53 +340,45 @@ var toggleDesignate = function() {
     }
 }
 
-$('.give-designate').each(function(i, el) {
-    var $el = $(el);
-    var $btn = $el.find('.give-designate-button');
-    var $input = $el.find('input');
-    var $inner = $el.find('.give-designate__inner');
-    var $mainContainer = $('.give-widget-main-container');
+// other button, calc slide
+$('.give-bar-container .designate-other').on('click', function(){
+    if (beforeCalcSlide == 'payment') {
+        $('.give-payment-form').fadeOut(300);
+    }
+    if (beforeCalcSlide == 'designate') {
+        $('.give-designate').fadeOut(300);
+    }
+    $('#give-amount-bar').fadeOut(300);
+    setTimeout(function() {
+        $('.give-presets').hide();
+        $('.give-widget-main-container').show();
+        $('.give-calculator')
+            .css({
+                x: '100%',
+                opacity: 0
+            })
+            .show()
+            .transition({
+                x: '0',
+                opacity: 1
+            }, 500);
+    }, 300);
 
-    // other button, calc slide
-    $('.give-bar-container .designate-other').on('click', function(){
-        if (beforeCalcSlide == 'payment') {
-            $('.give-payment-form').fadeOut(300);
-        }
-        if (beforeCalcSlide == 'designate') {
-            $el.fadeOut(300);
-        }
-        $('#give-amount-bar').fadeOut(300);
-        setTimeout(function() {
-            $('.give-presets').hide();
-            $mainContainer.show();
-            $('.give-calculator')
-                .css({
-                    x: '100%',
-                    opacity: 0
-                })
-                .show()
-                .transition({
-                    x: '0',
-                    opacity: 1
-                }, 500);
-        }, 300);
+    //toggleDesignate();
+});
 
-        //toggleDesignate();
-    });
+$('.give-designate-button').on('click', function(e) {
+    if (totalAmount == 0) {
+        alert('Select or enter Give amount');
+        return false;
+    }
 
-    $btn.on('click', function(e) {
-        if (totalAmount == 0) {
-            alert('Select or enter Give amount');
-            return false;
-        }
+    toggleDesignate();
 
-        toggleDesignate();
+});
 
-    });
-
-    $input.on('click', function(e) {
-        e.stopPropagation();
-    });
+$('.give-designate input').on('click', function(e) {
+    e.stopPropagation();
 });
 
 $('.give-select__hidden').on('change', function(e){
@@ -751,7 +735,6 @@ var setupCountry = function() {
 };
 
 var checkUserLocation = function(){
-
     var result = {cc:'US',state:'CA',phone:'1',city:'Mountain View',zip:'94043'};
     $('.country-select').val(result['cc']).change();
     $('.state-select').val(result['state']).change();
@@ -759,6 +742,7 @@ var checkUserLocation = function(){
     $('#give-field-city').val(result['city']);
     $('#give-field-postal').val(result['zip']);
     return;
+
     $.ajax({
         url: "checklocation.php",
         dataType: "json",
@@ -778,7 +762,6 @@ var checkUserLocation = function(){
 $('.give-payment-form__footer button').on('click', function(){
 
     var creditCard = $('.give-payment-tabs-slide.slick-current').attr('data-slick-index') == '0';
-
 
     if (creditCard) {
         // validate all related options
