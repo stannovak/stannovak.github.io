@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+	<head lang="en">
+		<meta charset="utf-8">
+		<title>Give Widget</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<meta name="theme-color" content="#fff">
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" media="all" href="give/dist/css/app.css">
+	</head>
+
+	<body>
+	<!-- BEGIN content -->
+	<div class="give">
+		<div class="give-bg">
+			<div class="give-l-center">
+				<div class="give-widget">
+					<div class="give-banner" style="background-image: url('img/banner.jpg')"></div>
+
+					<p class="give-tagline">
+						You can help bring the life-transforming Gospel to all nations when you donate to YourChurchName
+					</p>
+
+					<div class="give-widget-body">
+					<div class="give-widget-body__inner">
+					<div class="give-tabs">
+						<ul class="give-tabs__list give-scrollable">
+							<li class="give-tabs__item is-active">
+								<button class="give-tabs__button">Make a donation</button>
+							</li>
+							<li class="give-tabs__item">
+								<button class="give-tabs__button">Special initiatives</button>
+							</li>
+							<li class="give-tabs__item">
+								<button class="give-tabs__button">Statistics</button>
+							</li>
+						</ul>
+					</div>
+
+					<div class="give-widget-main-container">
+						<div class="give-presets">
+							<button class="give-prev-button give-icon _chevron-left"></button>
+							<button class="give-next-button give-icon _chevron-right"></button>
+
+							<div class="give-presets__slides">
+								<div class="give-presets__slide is-active">
+									<ul class="give-presets__list">
+										<li class="give-presets__item">
+											<button class="give-presets__button" rel="5"><sup>$</sup>5</button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button" rel="10"><sup>$</sup>10</button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button" rel="15"><sup>$</sup>15</button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button" rel="25"><sup>$</sup>25</button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button" rel="50"><sup>$</sup>50</button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button" rel="100"><sup>$</sup>100</button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button" rel="250"><sup>$</sup>250</button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button" rel="500"><sup>$</sup>500</button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button" rel="other">Other amount</button>
+										</li>
+									</ul>
+								</div>
+
+								<div class="give-presets__slide">
+									<ul class="give-presets__list">
+										<li class="give-presets__item">
+											<button class="give-presets__button"><sup>$</sup>1</button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button"><sup>$</sup>2</button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button"><sup>$</sup>30</button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button" disabled></button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button" disabled></button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button" disabled></button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button" disabled></button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button" disabled></button>
+										</li>
+										<li class="give-presets__item">
+											<button class="give-presets__button" rel="other">Other amount</button>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<div class="give-calculator">
+							<div class="give-bar-container">
+								<div class="give-amount-bar _amount">
+									<span class="give-amount-bar__left-label">Your Donation:</span>
+									<button class="give-amount-bar__left-button calc-close"><i class="give-icon _close"></i> <span>Close</span></button>
+									<button class="give-amount-bar__right-button"><i class="give-icon _arrow-left"></i> <span>Clear</span></button>
+									<div class="give-amount-bar__center">
+										<div class="give-amount">
+											<sup class="give-amount__currency">$</sup>
+											<span class="give-amount__before-point give-focus-in">0</span>
+											<span class="give-amount__after-point">00</span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="give-keyboard">
+								<div class="give-keyboard__table">
+									<div class="give-keyboard__row">
+										<div class="give-keyboard__cell">
+											<button class="give-keyboard__button">1</button>
+										</div>
+										<div class="give-keyboard__cell">
+											<button class="give-keyboard__button">2</button>
+										</div>
+										<div class="give-keyboard__cell">
+											<button class="give-keyboard__button">3</button>
+										</div>
+									</div>
+									<div class="give-keyboard__row">
+										<div class="give-keyboard__cell">
+											<button class="give-keyboard__button">4</button>
+										</div>
+										<div class="give-keyboard__cell">
+											<button class="give-keyboard__button">5</button>
+										</div>
+										<div class="give-keyboard__cell">
+											<button class="give-keyboard__button">6</button>
+										</div>
+									</div>
+									<div class="give-keyboard__row">
+										<div class="give-keyboard__cell">
+											<button class="give-keyboard__button">7</button>
+										</div>
+										<div class="give-keyboard__cell">
+											<button class="give-keyboard__button">8</button>
+										</div>
+										<div class="give-keyboard__cell">
+											<button class="give-keyboard__button">9</button>
+										</div>
+									</div>
+									<div class="give-keyboard__row">
+										<div class="give-keyboard__cell">
+											<button class="give-keyboard__button">0</button>
+										</div>
+										<div class="give-keyboard__cell">
+											<button class="give-keyboard__button">.</button>
+										</div>
+										<div class="give-keyboard__cell">
+											<button class="give-keyboard__button _ok-button">OK</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+
+					<div class="give-bar-container" id="give-amount-bar" style="display: none">
+						<div class="give-amount-bar _sum">
+							<span class="give-amount-bar__left-label">Your Donation:</span>
+							<button class="give-amount-bar__left-button designate-other">
+								<i class="give-icon _keyboard"></i> <span>Other Amount</span>
+							</button>
+							<div class="give-amount-bar__change-value">
+								<button class="give-icon _plus"></button>
+								<button class="give-icon _minus"></button>
+							</div>
+							<div class="give-amount-bar__center">
+								<div class="give-amount">
+									<sup class="give-amount__currency">$</sup>
+									<span class="give-amount__before-point">0</span>
+									<span class="give-amount__after-point">00</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="give-designate">
+						<label class="give-check give-designate-button">
+							<input class="give-check__input" type="checkbox">
+							<span class="give-check__text">Designate</span>
+						</label>
+						<div class="give-designate__inner">
+
+							<div class="give-range">
+								<div class="give-range__row">
+									<span class="give-range__label">Fund #1</span>
+									<div class="give-range__values">
+										<span class="give-range__val"></span>
+										<span class="give-range__val-percent"></span>
+									</div>
+								</div>
+								<div class="give-range__row">
+									<div class="give-js-range"></div>
+								</div>
+							</div>
+
+							<div class="give-range _optional">
+								<button class="give-range__remove give-icon _close" rel="1"></button>
+								<div class="give-range__row">
+									<span class="give-range__label">Fund #2</span>
+									<div class="give-range__values">
+										<span class="give-range__val"></span>
+										<span class="give-range__val-percent"></span>
+									</div>
+								</div>
+								<div class="give-range__row">
+									<div class="give-js-range"></div>
+								</div>
+							</div>
+
+							<div class="give-range _optional">
+								<button class="give-range__remove give-icon _close" rel="2"></button>
+								<div class="give-range__row">
+									<span class="give-range__label">Fund #3</span>
+									<div class="give-range__values">
+										<span class="give-range__val"></span>
+										<span class="give-range__val-percent"></span>
+									</div>
+								</div>
+								<div class="give-range__row">
+									<div class="give-js-range"></div>
+								</div>
+							</div>
+
+							<div class="give-range _optional">
+								<button class="give-range__remove give-icon _close" rel="3"></button>
+								<div class="give-range__row">
+									<span class="give-range__label">Fund #4</span>
+									<div class="give-range__values">
+										<span class="give-range__val"></span>
+										<span class="give-range__val-percent"></span>
+									</div>
+								</div>
+								<div class="give-range__row">
+									<div class="give-js-range"></div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="give-confirmation-container">
+						<div class="give-check-group">
+							<div class="give-check-group__row">
+								<label class="give-check _important">
+									<input class="give-check__input" type="checkbox">
+									<span class="give-check__text">Make this</span>
+								</label>
+
+								<div class="give-recurring-gift">
+									<div class="give-recurring-gift__cell">
+										<div class="give-select">
+											<span class="give-select__value">Monthly</span>
+											<select class="give-select__hidden sub-period-select">
+												<option value="weekly">Weekly</option>
+												<option value="monthly" selected>Monthly</option>
+												<option value="yearly">Yearly</option>
+											</select>
+										</div>
+										<span>recurring gift.</span>
+									</div>
+									<div class="give-recurring-gift__cell month-day-block">
+										<span>Day of Month:</span>
+										<div class="give-select">
+											<span class="give-select__value"></span>
+											<select class="give-select__hidden day-of-month"></select>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="give-check-group__row">
+								<label class="give-check">
+									<input class="give-check__input" type="checkbox">
+									<span class="give-check__text">In honor or memory of someone?</span>
+								</label>
+								<div class="give-in-memory-of">
+									<div class="give-field _simple">
+										<input class="give-field__input" type="text" placeholder="Enter name here">
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<button type="submit" class="give-submit-button">
+							<span class="give-submit-button-text">Confirm</span>
+						</button>
+
+					</div>
+
+					<form class="give-payment-form" style="display: none" method="post" id="payment-form" onsubmit="return false;">
+						<h3 class="give-title _size-sm">Payment Information</h3>
+
+						<div class="give-fields-group">
+							<div class="give-fields-group__cell">
+								<div class="give-field">
+									<input class="give-field__input" type="text" name="first_name" id="give-field-fname" maxlength="25">
+									<label class="give-field__label" for="give-field-fname">First Name</label>
+									<div class="give-field__left-icon give-icon _person"></div>
+									<div class="give-field__right-icon"></div>
+								</div>
+							</div>
+
+							<div class="give-fields-group__cell">
+								<div class="give-field">
+									<input class="give-field__input" type="text" name="last_name" id="give-field-lname" maxlength="25">
+									<label class="give-field__label" for="give-field-lname">Last Name</label>
+									<div class="give-field__left-icon give-icon _person"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="give-fields-group">
+							<div class="give-fields-group__cell">
+								<div class="give-field">
+									<input class="give-field__input" type="email" name="email" id="give-field-email" maxlength="255">
+									<label class="give-field__label" for="give-field-email">Email</label>
+									<div class="give-field__left-icon give-icon _at"></div>
+								</div>
+							</div>
+
+							<div class="give-fields-group__cell">
+								<div class="give-field _phone">
+									<input class="give-field__input" type="tel" name="phone" id="give-field-phone" maxlength="15">
+									<label class="give-field__label" for="give-field-phone">Mobile (optional)</label>
+									<div class="give-field__select">
+										<div class="give-select">
+											<span class="give-select__value">Code</span>
+											<select class="give-select__hidden phone-select"></select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="give-fields-group">
+							<div class="give-fields-group__cell">
+								<div class="give-field">
+									<input class="give-field__input" type="text" name="street" id="give-field-address" maxlength="25">
+									<label class="give-field__label" for="give-field-address">Street Address</label>
+									<div class="give-field__left-icon give-icon _street"></div>
+								</div>
+							</div>
+
+							<div class="give-fields-group__cell">
+								<div class="give-field">
+									<input class="give-field__input" type="text" name="city" id="give-field-city" maxlength="25">
+									<label class="give-field__label" for="give-field-city">City</label>
+									<div class="give-field__left-icon give-icon _location"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="give-fields-group _tripple">
+							<div class="give-fields-group__cell">
+								<div class="give-select _grey-border _width-fluid">
+									<span class="give-select__value">Country</span>
+									<select class="give-select__hidden country-select"></select>
+								</div>
+							</div>
+
+							<div class="give-fields-group__cell state-select-block">
+								<div class="give-select _grey-border _width-fluid">
+									<span class="give-select__value">State</span>
+									<select class="give-select__hidden state-select"></select>
+								</div>
+							</div>
+
+							<div class="give-fields-group__cell">
+								<div class="give-field">
+									<input class="give-field__input" type="text" name="postal" id="give-field-postal" maxlength="6">
+									<label class="give-field__label" for="give-field-postal">Postal/ZIP Code</label>
+									<div class="give-field__left-icon give-icon _postal"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="give-payment-tabs">
+							<div class="give-payment-tabs__inner">
+								<button type="button" class="give-payment-tabs__button">CREDIT/DEBIT CARD</button>
+								<button type="button" class="give-payment-tabs__button">ACH/CHECK</button>
+							</div>
+						</div>
+
+						<div class="give-payment-tabs-content">
+
+							<div class="give-payment-tabs-slide is-active">
+								<div class="give-card-box">
+									<div class="give-card">
+										<div class="give-card__front">
+											<div class="give-card__chip"></div>
+											<div class="give-card__logo"></div>
+											<div class="give-card__number-field">
+												<label class="give-card__label" for="give-card-number">Card number</label>
+												<div class="give-field _solid-bg _no-left-icon _right-icon">
+													<input class="give-field__input" type="password" name="card_number" id="give-card-number" maxlength="25">
+													<div class="give-field__right-icon give-icon _eye-closed"></div>
+												</div>
+											</div>
+
+											<div class="give-card__holder-field">
+												<label class="give-card__label" for="give-card-holder">Card holder</label>
+												<div class="give-field _solid-bg">
+													<input class="give-field__input" type="text" name="card_holder" id="give-card-holder" maxlength="50">
+													<div class="give-field__left-icon give-icon _person"></div>
+												</div>
+											</div>
+
+											<div class="give-card__date-field">
+												<label class="give-card__label" for="give-card-holder">Expires</label>
+												<div class="give-select _expires">
+													<span class="give-select__value">Date</span>
+													<div id="exp-date" class="give-dropdown _double _date" style="position: relative; display: none; margin-top: -180px; height: 180px">
+														<ul class="give-dropdown__list month"></ul>
+														<ul class="give-dropdown__list year"></ul>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="give-card">
+										<div class="give-card__back">
+											<div class="give-card__dark-line"></div>
+											<span class="give-card__label _align-center">Autorized signature</span>
+											<div class="give-card__white-line">
+												<span class="give-card__number"></span>
+											</div>
+											<div class="give-card__cvv-field">
+												<label for="give-card-cvv" class="give-card__label">CVV code</label>
+												<div class="give-field _no-left-icon _right-icon _solid-bg">
+													<input type="password" class="give-field__input" id="give-card-cvv" maxlength="4" placeholder="CVV">
+													<div class="give-field__right-icon give-icon _eye-closed"></div>
+												</div>
+											</div>
+											<div class="give-card__holder">
+												<span class="give-card__label">Card holder</span>
+												<span class="give-card__value"></span>
+											</div>
+											<div class="give-card__expires">
+												<span class="give-card__label">Expires</span>
+												<span class="give-card__value"></span>
+											</div>
+											<div class="give-card__bottom-line">
+												<button class="give-card__rotate-btn give-icon _rotate" type="button"></button>
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+								<p>I am a citizen or permanent resident of the United States and other political or Agreement text I am a citizen or permanent resident of the United States and other political or Agreement text I am a citizen or permanent resident
+									of the United States and other political or Agreement text I am a citizen or permanent resident of the United States and other political or Agreement text</p>
+							</div>
+
+							<div class="give-payment-tabs-slide">
+								<div class="give-ach">
+									<div class="give-fields-group">
+										<div class="give-fields-group__cell">
+											<div class="give-field _solid-bg">
+												<input class="give-field__input" type="text" name="ach_first_name" placeholder="First Name" id="ach_first_name" maxlength="25">
+												<div class="give-field__left-icon give-icon _person"></div>
+											</div>
+										</div>
+
+										<div class="give-fields-group__cell">
+											<div class="give-field _solid-bg">
+												<input class="give-field__input" type="text" name="ach_last_name" placeholder="Last Name" id="ach_last_name" maxlength="25">
+												<div class="give-field__left-icon give-icon _person"></div>
+											</div>
+										</div>
+									</div>
+
+									<div class="give-ach__row">
+										<div class="give-ach__lines"></div>
+										<div class="give-ach__sum"></div>
+									</div>
+
+									<div class="give-fields-group">
+										<div class="give-fields-group__cell">
+											<label class="give-ach__label" for="give-ach-routing">Routing #</label>
+											<div class="give-field _no-left-icon _right-icon _solid-bg">
+												<input class="give-field__input" type="password" name="ach_routing" id="give-ach-routing" placeholder="Routing Number" maxlength="9">
+												<div class="give-field__right-icon give-icon _eye-closed"></div>
+											</div>
+										</div>
+
+										<div class="give-fields-group__cell">
+											<label class="give-ach__label" for="give-ach-account">Account #</label>
+											<div class="give-field _no-left-icon _right-icon _solid-bg">
+												<input class="give-field__input" type="password" name="ach_account" id="give-ach-account" placeholder="Account Number" maxlength="17">
+												<div class="give-field__right-icon give-icon _eye-closed"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="give-payment-form__footer">
+
+							<button type="submit" class="give-submit-button">Confirm</button>
+
+							<div class="give-secured-label"><i class="give-icon _shield"></i> <span>Verified &amp; Secured</span></div>
+						</div>
+					</form>
+
+					</div>
+					</div>
+
+					<footer class="give-footer">
+						<div class="give-footer__inner">
+							<div class="give-footer__cell">
+								<button class="give-icon _bulb"></button>
+							</div>
+							<div class="give-footer__cell give-footer__copyright">
+								<span>Powered by:</span>
+								<a href="http://www.impactfactors.net" target="_blank" title="Impactfactors">
+									<img src="img/svg/impactfactors-logo.svg" alt="Impactfactors">
+								</a>
+							</div>
+							<div class="give-footer__cell">
+								<div class="give-help-container">
+									<button class="give-icon _help"></button>
+									<div class="give-help-popup">
+										<div class="give-icon _help"></div>
+										<p>
+											If you have any questions, please feel free to email us at:
+											<br><a href="mailto:info@organization.org">info@organization.org</a>
+										</p>
+										<p>
+											or call us
+											<br><a href="tel:18002142343">1.800.214.2343</a>
+										</p>
+										<strong>Thank You.</strong>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- BEGIN scripts -->
+	<script type="text/javascript" src="js/lib/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="js/lib/jquery.transit.min.js"></script>
+	<script type="text/javascript" src="js/lib/nouislider.min.js"></script>
+	<script type="text/javascript" src="js/lib/slick.min.js"></script>
+	<script type="text/javascript" src="js/lib/form-validator/jquery.form-validator.js"></script>
+	<script type="text/javascript">
+		document.writeln('<script type="text/javascript" src="give/dist/js/app.js?tm=' + Math.random() + '"><\/script>');
+		document.writeln('<script type="text/javascript" src="js/tmp.js?tm=' + Math.random() + '"><\/script>');
+	</script>
+	<script type="text/javascript" src="js/cc.js"></script>
+	<!-- END scripts -->
+</body>
+</html>
