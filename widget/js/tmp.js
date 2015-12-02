@@ -1,6 +1,6 @@
 var totalAmount = 0;
 var currentSlide = 'preset';
-var beforeCalcSlide = '';
+var beforeCalcSlide = 'preset';
 
 (function() {
     $('.give-confirmation-container').each(function(index, el) {
@@ -359,6 +359,9 @@ $('.give-designate').each(function(i, el) {
     $('.give-bar-container .designate-other').on('click', function(){
         if (beforeCalcSlide == 'payment') {
             $('.give-payment-form').fadeOut(300);
+        }
+        if (beforeCalcSlide == 'designate') {
+            $el.fadeOut(300);
         }
         $('#give-amount-bar').fadeOut(300);
         setTimeout(function() {
@@ -747,6 +750,7 @@ var setupCountry = function() {
 };
 
 var checkUserLocation = function(){
+
     var result = {cc:'US',state:'CA',phone:'1',city:'Mountain View',zip:'94043'};
     $('.country-select').val(result['cc']).change();
     $('.state-select').val(result['state']).change();
@@ -754,7 +758,6 @@ var checkUserLocation = function(){
     $('#give-field-city').val(result['city']);
     $('#give-field-postal').val(result['zip']);
     return;
-
     $.ajax({
         url: "checklocation.php",
         dataType: "json",
@@ -776,6 +779,12 @@ $('.give-payment-form__footer button').on('click', function(){
     var creditCard = $('.give-payment-tabs-slide.slick-current').attr('data-slick-index') == '0';
 
 
+    if (creditCard) {
+        // validate all related options
+        console.log('validate credit card');
+        var cholder = $('#give-card-holder');
+
+    }
 
     var options = {
 
