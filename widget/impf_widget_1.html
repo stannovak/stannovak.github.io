@@ -319,7 +319,7 @@
 						<div class="give-fields-group">
 							<div class="give-fields-group__cell">
 								<div class="give-field">
-									<input class="give-field__input" type="text" name="first_name" id="give-field-fname" maxlength="25">
+									<input class="give-field__input" type="text" name="first_name" id="give-field-fname" autocomplete="given-name" maxlength="25">
 									<label class="give-field__label" for="give-field-fname">First Name</label>
 									<div class="give-field__left-icon give-icon _person"></div>
 									<div class="give-field__right-icon"></div>
@@ -328,7 +328,7 @@
 
 							<div class="give-fields-group__cell">
 								<div class="give-field">
-									<input class="give-field__input" type="text" name="last_name" id="give-field-lname" maxlength="25">
+									<input class="give-field__input" type="text" name="last_name" id="give-field-lname" autocomplete="family-name" maxlength="25">
 									<label class="give-field__label" for="give-field-lname">Last Name</label>
 									<div class="give-field__left-icon give-icon _person"></div>
 								</div>
@@ -338,7 +338,7 @@
 						<div class="give-fields-group">
 							<div class="give-fields-group__cell">
 								<div class="give-field">
-									<input class="give-field__input" type="email" name="email" id="give-field-email" maxlength="255">
+									<input class="give-field__input" type="email" name="email" id="give-field-email" autocomplete="email" maxlength="255">
 									<label class="give-field__label" for="give-field-email">Email</label>
 									<div class="give-field__left-icon give-icon _at"></div>
 								</div>
@@ -346,7 +346,7 @@
 
 							<div class="give-fields-group__cell">
 								<div class="give-field _phone">
-									<input class="give-field__input" type="tel" name="phone" id="give-field-phone" maxlength="15">
+									<input class="give-field__input" type="tel" name="phone" id="give-field-phone" date-validation-optional="true" autocomplete="tel-national" maxlength="15">
 									<label class="give-field__label" for="give-field-phone">Mobile (optional)</label>
 									<div class="give-field__select">
 										<div class="give-select">
@@ -361,7 +361,7 @@
 						<div class="give-fields-group">
 							<div class="give-fields-group__cell">
 								<div class="give-field">
-									<input class="give-field__input" type="text" name="street" id="give-field-address" maxlength="25">
+									<input class="give-field__input" type="text" name="street" id="give-field-address" autocomplete="street-address" maxlength="25">
 									<label class="give-field__label" for="give-field-address">Street Address</label>
 									<div class="give-field__left-icon give-icon _street"></div>
 								</div>
@@ -378,9 +378,9 @@
 
 						<div class="give-fields-group _tripple">
 							<div class="give-fields-group__cell">
-								<div class="give-select _grey-border _width-fluid">
+								<div class="give-field give-select _grey-border _width-fluid">
 									<span class="give-select__value">Country</span>
-									<select class="give-select__hidden country-select"></select>
+									<select class="give-select__hidden country-select" name="country" id="give-field-country"></select>
 								</div>
 							</div>
 
@@ -393,7 +393,7 @@
 
 							<div class="give-fields-group__cell">
 								<div class="give-field">
-									<input class="give-field__input" type="text" name="postal" id="give-field-postal" maxlength="6">
+									<input class="give-field__input" type="text" name="postal" id="give-field-postal" autocomplete="postal-code" maxlength="6">
 									<label class="give-field__label" for="give-field-postal">Postal/ZIP Code</label>
 									<div class="give-field__left-icon give-icon _postal"></div>
 								</div>
@@ -418,7 +418,7 @@
 											<div class="give-card__number-field">
 												<label class="give-card__label" for="give-card-number">Card number</label>
 												<div class="give-field _solid-bg _no-left-icon _right-icon">
-													<input class="give-field__input" type="password" name="card_number" id="give-card-number" maxlength="25">
+													<input class="give-field__input" inputmode="numeric" type="password" name="cc-number" id="give-card-number" autocomplete="cc-number" maxlength="25">
 													<div class="give-field__right-icon give-icon _eye-closed"></div>
 												</div>
 											</div>
@@ -426,15 +426,16 @@
 											<div class="give-card__holder-field">
 												<label class="give-card__label" for="give-card-holder">Card holder</label>
 												<div class="give-field _solid-bg">
-													<input class="give-field__input" type="text" name="card_holder" id="give-card-holder" maxlength="50">
+													<input class="give-field__input" type="text" name="card_holder" id="give-card-holder" autocomplete="cc-name" maxlength="50">
 													<div class="give-field__left-icon give-icon _person"></div>
 												</div>
 											</div>
 
 											<div class="give-card__date-field">
 												<label class="give-card__label" for="give-card-holder">Expires</label>
-												<div class="give-select _expires">
+												<div class="give-field give-select _expires">
 													<span class="give-select__value">Date</span>
+													<input type="hidden" name="exp-date" value="" id="give-card-exp-date" />
 													<div id="exp-date" class="give-dropdown _double _date" style="position: relative; display: none; margin-top: -180px; height: 180px">
 														<ul class="give-dropdown__list month"></ul>
 														<ul class="give-dropdown__list year"></ul>
@@ -454,7 +455,7 @@
 											<div class="give-card__cvv-field">
 												<label for="give-card-cvv" class="give-card__label">CVV code</label>
 												<div class="give-field _no-left-icon _right-icon _solid-bg">
-													<input type="password" class="give-field__input" id="give-card-cvv" maxlength="4" placeholder="CVV">
+													<input type="password" class="give-field__input" inputmode="numeric" id="give-card-cvv" name="cvv" maxlength="4" placeholder="CVV">
 													<div class="give-field__right-icon give-icon _eye-closed"></div>
 												</div>
 											</div>
@@ -483,14 +484,14 @@
 									<div class="give-fields-group">
 										<div class="give-fields-group__cell">
 											<div class="give-field _solid-bg">
-												<input class="give-field__input" type="text" name="ach_first_name" placeholder="First Name" id="ach_first_name" maxlength="25">
+												<input class="give-field__input" type="text" name="ach_first_name" placeholder="First Name" id="ach_first_name" autocomplete="given-name" maxlength="25">
 												<div class="give-field__left-icon give-icon _person"></div>
 											</div>
 										</div>
 
 										<div class="give-fields-group__cell">
 											<div class="give-field _solid-bg">
-												<input class="give-field__input" type="text" name="ach_last_name" placeholder="Last Name" id="ach_last_name" maxlength="25">
+												<input class="give-field__input" type="text" name="ach_last_name" placeholder="Last Name" id="ach_last_name" autocomplete="family-name" maxlength="25">
 												<div class="give-field__left-icon give-icon _person"></div>
 											</div>
 										</div>

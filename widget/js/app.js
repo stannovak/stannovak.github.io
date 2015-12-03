@@ -35,16 +35,16 @@ require('./modules/animations');
     // functions
     function animContainerSize(size, cb) {
         console.log(sizes);
-        /*
+
         container.animate({
             height: size
-        }, 300, cb);
-        */
+        }, 100, cb);
+
     }
 
     function toggleToCalc() {
         animContainerSize(sizes.calc);
-        presets.fadeOut(300, function() {
+        presets.fadeOut(200, function() {
             calc
                 .css({
                     x: '100%',
@@ -54,7 +54,7 @@ require('./modules/animations');
                 .transition({
                     x: '0',
                     opacity: 1
-                }, 500);
+                }, 250);
             currentSlide = 'calc';
         });
         if ($('.give-confirmation-container').attr('rel') == 'visible') {
@@ -67,10 +67,10 @@ require('./modules/animations');
             .transition({
                 x: '100%',
                 opacity: 0
-            }, 500, function() {
+            }, 250, function() {
                 calc.hide();
                 animContainerSize(sizes.presets);
-                presets.fadeIn(300);
+                presets.fadeIn(200);
                 resetPreset();
             });
         currentSlide = 'preset';
@@ -128,6 +128,10 @@ $('.give-icon._eye-closed').on('click', function(e) {
         case 'text':
             $input.attr('type', 'password');
             break;
+    }
+
+    if ($input.attr('name') == 'card_number') {
+        formatCardNum($input);
     }
 });
 

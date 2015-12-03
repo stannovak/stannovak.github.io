@@ -56,35 +56,44 @@ function handleClick(e) {
         currentInput = afterPoint.classList.contains('give-focus-in') ? afterPoint : beforePoint;
         return;
     }
-    var intVal = parseInt(currentInput.textContent);
-    var intValLen = intVal.toString().length;
-    if (intVal.toString().length < currentInput.maxLen) {
-        var char = '';
-        if (currentInput.maxLen == 2) {
-            char = '0';
-        }
-        currentInput.textContent = (intVal ? intVal.toString() : char) + value;
+
+    var parts = totalAmount.formatMoney().replace(',','').split('.');
+    var idx = 0;
+    if (currentInput.maxLen == 2) {
+        idx = 1;
+    }
+    parts[idx] = (parseInt(parts[idx])*10 + parseInt(value)).toString();
+    console.log(parts[idx]);
+    if (parts[idx].length > currentInput.maxLen) {
+        return;
+    }
+
+    var newAmountParts = (parseInt(parts[0]) + parseInt(parts[1])/100).formatMoney().split('.');
+    if (currentInput.maxLen == 2) {
+        currentInput.textContent = newAmountParts[1];
     } else {
-        console.log('max amount');
+        currentInput.textContent = newAmountParts[0];
     }
     updateCalcTotal();
 }
 
 var updateCalcTotal = function() {
-    totalAmount = parseInt(beforePoint.textContent) + parseInt(afterPoint.textContent)/100;
+    totalAmount = parseInt(beforePoint.textContent.replace(',','')) + parseInt(afterPoint.textContent)/100;
 };
 
 function clearLastChar() {
-    var str = currentInput.textContent;
-    var intVal = parseInt(str.slice(0, -1));
-    var intValLen = str.length-1;
-    currentInput.textContent = intVal ? intVal.toString() : '0';
+
+    var parts = totalAmount.formatMoney().replace(',','').split('.');
+    var idx = 0;
     if (currentInput.maxLen == 2) {
-        if (!intVal) {
-            currentInput.textContent = '00';
-        } else if (intValLen == 1) {
-            currentInput.textContent = '0' + currentInput.textContent;
-        }
+        idx = 1;
+    }
+    parts[idx] = parts[idx].slice(0,-1);
+    var newAmountParts = (parseInt(parts[0]) + parseInt(parts[1])/100).formatMoney().split('.');
+    if (currentInput.maxLen == 2) {
+        currentInput.textContent = newAmountParts[1];
+    } else {
+        currentInput.textContent = newAmountParts[0];
     }
     updateCalcTotal();
 }
@@ -103,9 +112,20 @@ Array.prototype.forEach.call(document.querySelectorAll('.give-keyboard__button')
                 if (beforeCalcSlide != 'preset') {
                     closePopupCalc();
                 } else {
-                    $('.give-confirmation-container')
-                        .slideDown(300)
-                        .attr('rel', 'visible');
+                    $('.give-calculator')
+                        .transition({
+                            x: '100%',
+                            opacity: 0
+                        }, 250, function(){
+                            $('.give-calculator').hide();
+                            $('.give-widget-main-container').hide().attr('rel','hide');
+                            setAmount();
+                            $('#give-amount-bar').slideDown(150);
+                            $('.give-confirmation-container')
+                                .slideDown(150)
+                                .attr('rel', 'visible');
+                        });
+
                 }
             }
         });
@@ -181,7 +201,7 @@ var Designate = {
             }
         }
         this.amount = amount;
-        var amountSet = {0 : amount};
+        var amountSet = {0 : parseInt(amount)};
         this.createSliders(amountSet);
     },
     handlerChange:function(arr, handlerIndex, val) {
@@ -259,7 +279,7 @@ var Designate = {
         for (var idx in valueMap) {
             var slider = Designate.sliders[idx][0].noUiSlider;
             console.log('Set new val: ' + valueMap[idx] + ', idx: ' + idx);
-            slider.set(valueMap[idx]);
+            slider.set(parseInt(valueMap[idx]));
             Designate.sliders[idx]['value'] = slider.get();
         }
     },
@@ -287,13 +307,19 @@ var Designate = {
 };
 
 var setAmount = function() {
-    var afterPoint = totalAmount - parseInt(totalAmount);
+    var amount = totalAmount.formatMoney();
+    var parts = amount.split('.');
+    $('.give-amount__before-point').text(parts[0]);
+    $('.give-amount__after-point').text(parts[1]);
+    $('.give-ach__sum').text('$' + amount);
+    /*var afterPoint = totalAmount - parseInt(totalAmount);
     var beforePoint = totalAmount - afterPoint;
     $('.give-amount__before-point').text(beforePoint);
     afterPoint = (Math.round(afterPoint*100)).toString().substr(0,2);
     afterPoint = afterPoint > 0 ? (afterPoint > 10 ? afterPoint : '0' + afterPoint) : '00'
     $('.give-amount__after-point').text(afterPoint);
     $('.give-ach__sum').text('$' + beforePoint + '.' + afterPoint);
+    */
 };
 
 var recalculateTotalAmount = function(step) {
@@ -321,10 +347,11 @@ $('.give-range__remove').on('click', function(){
 var toggleDesignate = function() {
     var el = $('.give-designate');
     el.toggleClass('is-active');
-    $('.give-widget-main-container').slideToggle(300);
     el.find('.give-designate__inner').slideToggle(300);
-    $('#give-amount-bar').slideToggle(300);
+
     if (el.hasClass('is-active')) {
+        $('#give-amount-bar').slideDown(300);
+        $('.give-widget-main-container').slideUp(300);
         setAmount(totalAmount);
         Designate.init(totalAmount);
         if ($('.give-confirmation-container').attr('rel') == 'visible') {
@@ -332,6 +359,10 @@ var toggleDesignate = function() {
         }
         beforeCalcSlide = 'designate';
     } else {
+        if ($('.give-widget-main-container').attr('rel') !== 'hide') {
+            $('.give-widget-main-container').slideDown(300);
+            $('#give-amount-bar').slideUp(300);
+        }
         if ($('.give-confirmation-container').attr('rel') == 'visible') {
             $('.give-confirmation-container').show();
         }
@@ -383,7 +414,9 @@ $('.give-designate input').on('click', function(e) {
 
 $('.give-select__hidden').on('change', function(e){
     var el = $(this);
-    el.parent().find('.give-select__value').text(el.find(':selected').text());
+    if (el.val().length) {
+        el.parent().find('.give-select__value').text(el.find(':selected').text());
+    }
     if (el.hasClass('sub-period-select')) {
         if (el.val() == 'monthly') {
             $('.month-day-block').show();
@@ -433,32 +466,45 @@ var validationConfig = {
             length : '3-50',
             regexp: '^([a-zA-Z\\s]+)$'
         },
-        '#ach_first_name,#ach_last_name,#give-card-holder' : {
+        '#ach_first_name,#ach_last_name' : {
             validation : 'length,custom',
             length : '3-50',
-            regexp: '^([a-zA-Z\\s]+)$'
+            regexp: '^([a-zA-Z\\s]+)$',
+            type: 'ach'
+        },
+        '#give-card-holder' : {
+            validation : 'length,custom',
+            length : '3-50',
+            regexp: '^([a-zA-Z\\s]+)$',
+            type: 'cc'
         },
         '#give-card-number' : {
-            validation : 'creditcard'
+            validation : 'length,creditcard',
+            length:'min14',
+            type: 'cc'
         },
         '#give-ach-routing' : {
-            validation : 'bankrouting'
+            validation : 'bankrouting',
+            type: 'ach'
         },
         '#give-ach-account' : {
             validation : 'number,length',
-            length: '7-17'
+            length: '7-17',
+            type: 'ach'
         },
         '#give-card-cvv' : {
-            validation : 'cvv'
+            validation : 'cvv',
+            type: 'cc'
+        },
+        '#give-field-country,#give-field-address,#give-field-city' : {
+            validation : 'required'
+        },
+        '#give-card-exp-date' : {
+            validation : 'required',
+            type:'cc'
         },
         '#give-field-email' : {
             validation : 'required,email'
-        },
-        '#give-field-address' : {
-            validation : 'required'
-        },
-        '#give-field-city' : {
-            validation : 'required'
         },
         '#give-field-phone' : {
             validation : 'length,number',
@@ -472,6 +518,8 @@ var validationConfig = {
     onElementValidate : function(valid, $el, $form, errorMess) {
         $el.attr('rel', valid ? 1 : 0);
     },
+    validateHiddenInputs: true,
+    validateOnBlur: false,
     errorElementClass:'is-error',
     inputParentClassOnError:'is-error',
     inputParentClassOnSuccess: 'is-valid',
@@ -527,6 +575,12 @@ $('.give-confirmation-container button').on('click', function() {
                 console.log('setupValidation init');
                 $.setupValidation(validationConfig);
                 console.log('setupValidation end');
+                $('[data-validation]').on('change', function(){
+                    if ($(this).hasClass('is-error')) {
+                        $(this).validate();
+                    }
+                });
+
             }
         });
 
@@ -567,11 +621,11 @@ $('.give-confirmation-container button').on('click', function() {
             }
         });
 
-        $('#give-card-holder').on('blur',function(){
+        $('#give-card-holder').on('change',function(){
             $('.give-card__holder .give-card__value').text($(this).val());
         });
 
-        $('#give-field-fname,#give-field-lname,#give-field-address,#give-field-city').on('keyup', function(e){
+        $('#give-field-fname,#give-field-lname,#give-field-address,#give-field-city,#give-card-holder').on('keyup', function(e){
             var el = $(this);
             var val = $(this).val().replace(/\s{2,}/g," ").split(" ");
             var res = [];
@@ -589,40 +643,49 @@ $('.give-confirmation-container button').on('click', function() {
                 // del and backspace
                 return;
             }
-            var val = $(this).val().replace(/[^0-9]/g,'');
-            var cardType = getCardType(val);
-            var logo = $('.give-card__logo img');
-            if (cardType == 'unknown') {
-                logo.remove();
-            } else if (logo.attr('rel') !== cardType) {
-                if (!logo.length) {
-                    logo = $('<img />');
-                    $('.give-card__logo').append(logo);
-                }
-                logo.attr('src','img/svg/payments/' + cardType + '.svg').attr('rel',cardType);
-            }
+            formatCardNum($(this));
 
-            val = val.split('').slice(0,16);
-            var len = val.length;
-            if (len >= 4) {
-                var inserted = 0;
-                for(var i=1; i <= len; i++) {
-                    if (i%4 == 0 && inserted < 3) {
-                        val.splice(i + inserted++,0,' ');
-                    }
-                }
-            }
-            $(this).val(val.join(''));
-            var backNum = val.join('');
-            if ($(this).parent().find('.give-icon').hasClass('_eye-closed')) {
-                backNum = backNum.replace(/[0-9]/g,'*');
-            }
-            $('.give-card .give-card__number').text(backNum);
+        });
+        $('#give-card-number').on('change', function(e){
+            formatCardNum($(this));
         });
 
         paymentInitiated = true;
     }
 });
+
+var formatCardNum = function(obj) {
+    console.log('formatCardNum');
+    var val = obj.val().replace(/[^0-9]/g,'');
+    var cardType = getCardType(val);
+    var logo = $('.give-card__logo img');
+    if (cardType == 'unknown') {
+        logo.remove();
+    } else if (logo.attr('rel') !== cardType) {
+        if (!logo.length) {
+            logo = $('<img />');
+            $('.give-card__logo').append(logo);
+        }
+        logo.attr('src','img/svg/payments/' + cardType + '.svg').attr('rel',cardType);
+    }
+
+    val = val.split('').slice(0,16);
+    var len = val.length;
+    if (len >= 4) {
+        var inserted = 0;
+        for(var i=1; i <= len; i++) {
+            if (i%4 == 0 && inserted < 3) {
+                val.splice(i + inserted++,0,' ');
+            }
+        }
+    }
+    var finalNum = val.join('');
+    $('.give-card .give-card__number').text(finalNum);
+    if (obj.parent().find('.give-icon').hasClass('_eye-closed')) {
+        finalNum = finalNum.replace(/\s/g,'');
+    }
+    obj.val(finalNum);
+};
 
 var paymentCard = (function() {
     var $el      = $('.give-card-box');
@@ -630,13 +693,17 @@ var paymentCard = (function() {
     // var $back    = $el.find('.give-card').last();
     var class1   = 'is-hide-front';
     var class2   = 'is-show-back';
-    var duration = 300;
+    var duration = 200;
     return {
         toBackSide: function(dur) {
             $el.addClass(class1);
             setTimeout(function() {
                 $el.addClass(class2);
+                if ($('#give-card-cvv').val().length < 3) {
+                    $('#give-card-cvv').focus();
+                }
             }, dur || duration);
+
         },
         toFrontSide: function(dur) {
             $el.removeClass(class2);
@@ -674,16 +741,18 @@ var showCardExp = function(){
     var year = $('.give-dropdown__list.year li.is-selected').attr('rel');
     $('.give-select._expires .give-select__value').text(month + '/' + year.substr(-2));
     $('.give-card__expires .give-card__value').text(month + ' / ' + year);
+
+    $('#give-card-exp-date').val(month + ' / ' + year).validate();
 };
 
 var getCardType = function (number) {
     var cards = {
-        visa: /^4[0-9]{12}(?:[0-9]{3})?$/,
-        mastercard: /^5[1-5][0-9]{14}$/,
-        amex: /^3[47][0-9]{13}$/,
-        diners_club: /^3(?:0[0-5]|[68][0-9])[0-9]{11}$/,
-        discover: /^6(?:011|5[0-9]{2})[0-9]{12}$/,
-        jcb: /^(?:2131|1800|35\d{3})\d{11}$/
+        visa: /^4[0-9][0-9]{1,}$/,
+        mastercard: /^5[1-5][0-9]{1,}$/,
+        amex: /^3[47][0-9]{1,}$/,
+        diners_club: /^3(?:0[0-5]|[68][0-9])[0-9]{1,}$/,
+        discover: /^6(?:011|5[0-9]{2})[0-9]{1,}$/,
+        jcb: /^(?:2131|1800|35\d{3})\d{1,}$/
     };
     for (var card in cards) {
         if (cards[card].test(number)) {
@@ -702,7 +771,7 @@ $('#give-field-lname').on('blur', function(){
     var firstName = $('#give-field-fname').val();
     var lastName = $(this).val();
     if (firstName.length && lastName.length && cholder.val().length == 0) {
-        cholder.val(firstName + ' ' + lastName);
+        cholder.val(firstName + ' ' + lastName).change();
     }
     $('#ach_first_name').val(firstName);
     $('#ach_last_name').val(lastName);
@@ -714,6 +783,10 @@ var setupCountry = function() {
     var country = $('.country-select');
     var state = $('.state-select');
     var phone = $('.phone-select');
+    country.append($('<option/>', {
+        value: '',
+        text : 'Select your country'
+    }));
     for (var idx in CountryList) {
         country.append($('<option/>', {
             value: CountryList[idx]['code'],
@@ -736,7 +809,7 @@ var setupCountry = function() {
 
 var checkUserLocation = function(){
     var result = {cc:'US',state:'CA',phone:'1',city:'Mountain View',zip:'94043'};
-    $('.country-select').val(result['cc']).change();
+    //$('.country-select').val(result['cc']).change();
     $('.state-select').val(result['state']).change();
     $('.phone-select').val(result['cc'] + ':' + result['phone']).change();
     $('#give-field-city').val(result['city']);
@@ -763,12 +836,49 @@ $('.give-payment-form__footer button').on('click', function(){
 
     var creditCard = $('.give-payment-tabs-slide.slick-current').attr('data-slick-index') == '0';
 
-    if (creditCard) {
-        // validate all related options
-        console.log('validate credit card');
-        var cholder = $('#give-card-holder');
+    var isFormValid = true;
+    var ccNonValid = [];
+    for(var ids in validationConfig['validate']) {
+        var obj = validationConfig['validate'][ids];
+        var methods = obj['validation'].split(',');
+
+        for(var m in methods) {
+            // check for mandatory fields
+            if (methods[m] == 'required') {
+                $(ids).validate(function (valid, elem) {
+                    console.log('Element ' + elem.name + ' is ' + ( valid ? 'valid' : 'invalid') + '; value="' + $(elem).val()+'"');
+                    isFormValid &= valid;
+                });
+                break;
+            }
+        }
+        if (typeof(obj['type'] !== 'undefined')) {
+            // verify card or ACH
+            if ((creditCard && obj['type'] == 'cc') || (!creditCard && obj['type'] == 'ach')) {
+                $(ids).validate(function (valid, elem) {
+                    console.log('['+obj['type']+'] Element ' + elem.name + ' is ' + ( valid ? 'valid' : 'invalid'));
+                    isFormValid &= valid;
+                    if (!valid && obj['type'] == 'cc') {
+                        ccNonValid.push(elem.name);
+                    }
+                });
+            }
+        }
+    }
+    if (ccNonValid.length) {
+        // check what side of card we are showing now and flip if any
+        var isBackSide = $('.give-card-box').hasClass('is-show-back');
+        if (!isBackSide && ccNonValid.length == 1 && ccNonValid.indexOf('cvv') !== -1) {
+            // flip to back side
+            paymentCard.toBackSide();
+        } else if (isBackSide && ccNonValid.indexOf('cvv') == -1) {
+            // flip to front side
+            paymentCard.toFrontSide();
+        }
 
     }
+
+    console.log('The form is ' + (isFormValid ? 'valid' : 'INVALID'));
 
     var options = {
 
@@ -794,9 +904,20 @@ var closePopupCalc = function(){
                     $('.give-presets').show();
                 });
             } else if (beforeCalcSlide == 'payment') {
+                $('.give-widget-main-container').hide();
                 $('.give-payment-form').fadeIn(300);
             }
             $('#give-amount-bar').fadeIn(300);
         });
 };
 
+Number.prototype.formatMoney = function(decPlaces, thouSeparator, decSeparator) {
+    var n = this,
+        decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+        decSeparator = decSeparator == undefined ? "." : decSeparator,
+        thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
+        sign = n < 0 ? "-" : "",
+        i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
+        j = (j = i.length) > 3 ? j % 3 : 0;
+    return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
+};

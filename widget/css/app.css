@@ -755,7 +755,7 @@
 
 .give .give-field.is-valid .give-field__left-icon { color: #37CF7F; }
 
-.give .give-field.is-error { color: #FF001F; -webkit-animation: give-shake 1s linear 1; animation: give-shake 1s linear 1; }
+.give .give-field.is-error { color: #FF001F; -webkit-animation: give-shake 500ms ease 1; animation: give-shake 500ms ease 1; }
 
 .give .give-field.is-error .give-field__input { border-color: #FF001F; box-shadow: inset 0 0 0 1px #FF001F; }
 
@@ -901,7 +901,7 @@
 
 .give .give-amount-bar._sum { background: #37CF7F; }
 
-.give .give-amount-bar._sum .give-amount-bar__left-label, .give .give-amount-bar._sum .give-amount-bar__right-label { opacity: 0.6; font-size: 14px; }
+.give .give-amount-bar._sum .give-amount-bar__left-label, .give .give-amount-bar._sum .give-amount-bar__right-label { opacity: 1; font-size: 14px; }
 
 .give .give-amount-bar._sum .give-amount__after-point { opacity: 1; }
 
