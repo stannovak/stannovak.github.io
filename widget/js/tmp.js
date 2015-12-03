@@ -809,7 +809,7 @@ var setupCountry = function() {
 
 var checkUserLocation = function(){
     var result = {cc:'US',state:'CA',phone:'1',city:'Mountain View',zip:'94043'};
-    //$('.country-select').val(result['cc']).change();
+    $('.country-select').val(result['cc']).change();
     $('.state-select').val(result['state']).change();
     $('.phone-select').val(result['cc'] + ':' + result['phone']).change();
     $('#give-field-city').val(result['city']);
