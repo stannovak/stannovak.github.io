@@ -135,12 +135,6 @@ $('.give-icon._eye-closed').on('click', function(e) {
     }
 });
 
-$('#show-thank').on('click', function(e) {
-    var $msg = $('.give-thank');
-    $msg.fadeToggle(500);
-});
-
-
 $('.give-in-memory-of').each(function(i, el) {
     var field = $(el)
     field.parents('.give-check-group')

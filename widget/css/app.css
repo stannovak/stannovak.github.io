@@ -355,7 +355,8 @@
 
 .give .give-presets__button > sup { font-size: 18px; }
 
-.give .give-presets__button:hover, .give .give-presets__button:focus, .give .give-presets__button.is-active { background: #4A90E2; color: #FFF; }
+.give .give-presets__button.is-active { background: #4A90E2; color: #FFF; }
+.give .give-presets__button:hover, .give .give-presets__button:focus { background: #99ccff; color: #FFF; }
 
 .give .give-prev-button, .give .give-next-button { position: absolute; top: 0; width: 24px; height: 100%; font-size: 13px; color: inherit; transition: background-color 0.15s ease; }
 
@@ -817,7 +818,7 @@
 
 .give .give-card__chip { width: 61px; height: 36px; position: absolute; top: 25px; left: 6px; background: url("../img/svg/card-chip.svg") no-repeat center; background-size: contain; }
 
-.give .give-card__label { display: block; font-family: "myriad-set-pro_text", sans-serif; font-weight: normal; font-size: 7px; letter-spacing: 0.35em; text-transform: uppercase; color: #FFF; line-height: 1; margin-bottom: 5px; }
+.give .give-card__label { display: block; font-family: "myriad-set-pro_text", sans-serif; font-weight: normal; font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: #FFF; line-height: 1; margin-bottom: 5px; }
 
 .give .give-card__label._align-center { text-align: center; }
 

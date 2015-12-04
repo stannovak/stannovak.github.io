@@ -1,6 +1,7 @@
 var totalAmount = 0;
 var currentSlide = 'preset';
 var beforeCalcSlide = 'preset';
+var designateObj = {};
 
 $('.give-presets__button[rel!=other]').on('click', function() {
     totalAmount = parseInt($(this).attr('rel'));
@@ -21,7 +22,7 @@ $('.give-presets__button[rel!=other]').one('click', function() {
 
 
 var beforePoint = document.querySelector('.give-amount__before-point');
-beforePoint.maxLen = 5;
+beforePoint.maxLen = 6;
 var afterPoint = document.querySelector('.give-amount__after-point');
 afterPoint.maxLen = 2;
 var clearBtn = document.querySelector('.give-amount-bar__right-button');
@@ -301,7 +302,8 @@ var Designate = {
             }
         }
         //value.text("$" + (Math.round(val)));
-        value.text("$" + val);
+        value.text("$" + parseInt(val).formatMoney(0));
+        designateObj[handlerIndex] = val;
         return percentValue.text((Math.round((100/Designate.amount) * val)) + "%");
     }
 };
@@ -500,7 +502,8 @@ var validationConfig = {
             validation : 'required'
         },
         '#give-card-exp-date' : {
-            validation : 'required',
+            validation : 'length',
+            length: 'min1',
             type:'cc'
         },
         '#give-field-email' : {
@@ -626,15 +629,7 @@ $('.give-confirmation-container button').on('click', function() {
         });
 
         $('#give-field-fname,#give-field-lname,#give-field-address,#give-field-city,#give-card-holder').on('keyup', function(e){
-            var el = $(this);
-            var val = $(this).val().replace(/\s{2,}/g," ").split(" ");
-            var res = [];
-            for (var idx in val) {
-                if (val[idx] != " ") {
-                    res.push(val[idx].substr(0, 1).toUpperCase() + val[idx].substr(1).toLowerCase());
-                }
-            }
-            el.val(res.join(' '));
+            formatSentence($(this));
         });
 
         $('#give-card-number').on('keyup', function(e){
@@ -653,6 +648,21 @@ $('.give-confirmation-container button').on('click', function() {
         paymentInitiated = true;
     }
 });
+
+$('#in-memory-of-value').on('keyup', function(e){
+    formatSentence($(this));
+});
+
+var formatSentence = function(el){
+    var val = el.val().replace(/\s{2,}/g," ").split(" ");
+    var res = [];
+    for (var idx in val) {
+        if (val[idx] != " ") {
+            res.push(val[idx].substr(0, 1).toUpperCase() + val[idx].substr(1).toLowerCase());
+        }
+    }
+    el.val(res.join(' '));
+};
 
 var formatCardNum = function(obj) {
     console.log('formatCardNum');
@@ -837,27 +847,40 @@ $('.give-payment-form__footer button').on('click', function(){
     var creditCard = $('.give-payment-tabs-slide.slick-current').attr('data-slick-index') == '0';
 
     var isFormValid = true;
+    var options = {
+        type: creditCard ? 'cc' : 'ach'
+    };
+    options[options['type']] = {};
+
     var ccNonValid = [];
     for(var ids in validationConfig['validate']) {
         var obj = validationConfig['validate'][ids];
-        var methods = obj['validation'].split(',');
+        if (obj.hasOwnProperty('validation')) {
+            var methods = obj['validation'].split(',');
 
-        for(var m in methods) {
-            // check for mandatory fields
-            if (methods[m] == 'required') {
-                $(ids).validate(function (valid, elem) {
-                    console.log('Element ' + elem.name + ' is ' + ( valid ? 'valid' : 'invalid') + '; value="' + $(elem).val()+'"');
-                    isFormValid &= valid;
-                });
-                break;
+            for (var m in methods) {
+                // check for mandatory fields
+                if (methods[m] == 'required') {
+                    $(ids).validate(function (valid, elem) {
+                        console.log('Element ' + elem.name + ' is ' + ( valid ? 'valid' : 'invalid') + '; value="' + $(elem).val() +'"');
+                        isFormValid &= valid;
+                        if (valid) {
+                            options[elem.name] = elem.value;
+                        }
+                    });
+                    break;
+                }
             }
         }
-        if (typeof(obj['type'] !== 'undefined')) {
+        if (obj.hasOwnProperty('type')) {
             // verify card or ACH
             if ((creditCard && obj['type'] == 'cc') || (!creditCard && obj['type'] == 'ach')) {
                 $(ids).validate(function (valid, elem) {
                     console.log('['+obj['type']+'] Element ' + elem.name + ' is ' + ( valid ? 'valid' : 'invalid'));
                     isFormValid &= valid;
+                    if (valid) {
+                        options[obj['type']][elem.name] = elem.value;
+                    }
                     if (!valid && obj['type'] == 'cc') {
                         ccNonValid.push(elem.name);
                     }
@@ -865,6 +888,15 @@ $('.give-payment-form__footer button').on('click', function(){
             }
         }
     }
+    // non mandatory fields (not a payment fields)
+    var ids = ['#give-field-phone','#country-phone','#country-state'];
+    for (var idx in ids) {
+        var obj = $(ids[idx]);
+        if (obj.val().length) {
+            options[obj.attr('name')] = obj.val();
+        }
+    }
+
     if (ccNonValid.length) {
         // check what side of card we are showing now and flip if any
         var isBackSide = $('.give-card-box').hasClass('is-show-back');
@@ -878,16 +910,60 @@ $('.give-payment-form__footer button').on('click', function(){
 
     }
 
-    console.log('The form is ' + (isFormValid ? 'valid' : 'INVALID'));
+    if (!isFormValid) {
+        return false;
+    }
 
-    var options = {
+    options['amount'] = totalAmount;
+    options['designate'] = designateObj;
+    if ($('#subscription').is(':checked')) {
+        options['sub'] = {
+            period: $('.sub-period-select').val(),
+            day: $('.day-of-month').val()
+        };
+    }
+    if ($('#in-memory-of').is(':checked')) {
+        options['in-memory'] = $('#in-memory-of-value').val();
+    }
 
-    };
+    console.log(options);
+    $('#submit-payment').hide();
+    $('#processing-payment').show();
+    setTimeout(function(){
+        var success = true;
 
-    alert('Submit form')
+        if (success) {
+            $('.give-thank').fadeIn(250);
+            $('.give-thank__close').on('click',function(){
+                $('.give-thank').fadeOut(250,function(){
+                    resetAllData();
+                });
+            });
+        } else {
+            alert('Show an error');
+        }
+    },3000);
+
     return false;
 });
 
+var resetAllData = function(){
+    $(validationConfig['form']).get(0).reset();
+    totalAmount = 0;
+    currentSlide = 'preset';
+    beforeCalcSlide = 'preset';
+    designateObj = {};
+    $('.give-presets__button[rel!=other]').removeClass('is-active');
+    setAmount();
+    $('.give-confirmation-container').removeAttr('rel').hide();
+    $('.give-widget-main-container').show();
+    $('.give-presets').show();
+    $('.give-calculator').hide();
+    $('.give-payment-form').hide();
+    $('#give-amount-bar').hide();
+    $('.give-designate').show();
+
+};
 
 var closePopupCalc = function(){
     $('.give-calculator')

@@ -80,28 +80,28 @@
 								<div class="give-presets__slide">
 									<ul class="give-presets__list">
 										<li class="give-presets__item">
-											<button class="give-presets__button"><sup>$</sup>1</button>
+											<button class="give-presets__button" rel="750"><sup>$</sup>750</button>
 										</li>
 										<li class="give-presets__item">
-											<button class="give-presets__button"><sup>$</sup>2</button>
+											<button class="give-presets__button" rel="1000"><sup>$</sup>1,000</button>
 										</li>
 										<li class="give-presets__item">
-											<button class="give-presets__button"><sup>$</sup>30</button>
+											<button class="give-presets__button" rel="1500"><sup>$</sup>1,500</button>
 										</li>
 										<li class="give-presets__item">
-											<button class="give-presets__button" disabled></button>
+											<button class="give-presets__button" rel="2000"><sup>$</sup>2,000</button>
 										</li>
 										<li class="give-presets__item">
-											<button class="give-presets__button" disabled></button>
+											<button class="give-presets__button" rel="5000"><sup>$</sup>5,000</button>
 										</li>
 										<li class="give-presets__item">
-											<button class="give-presets__button" disabled></button>
+											<button class="give-presets__button" rel="7000"><sup>$</sup>7,000</button>
 										</li>
 										<li class="give-presets__item">
-											<button class="give-presets__button" disabled></button>
+											<button class="give-presets__button" rel="10000"><sup>$</sup>10,000</button>
 										</li>
 										<li class="give-presets__item">
-											<button class="give-presets__button" disabled></button>
+											<button class="give-presets__button" rel="25000"><sup>$</sup>25,000</button>
 										</li>
 										<li class="give-presets__item">
 											<button class="give-presets__button" rel="other">Other amount</button>
@@ -268,7 +268,7 @@
 						<div class="give-check-group">
 							<div class="give-check-group__row">
 								<label class="give-check _important">
-									<input class="give-check__input" type="checkbox">
+									<input class="give-check__input" type="checkbox" id="subscription" />
 									<span class="give-check__text">Make this</span>
 								</label>
 
@@ -296,12 +296,12 @@
 
 							<div class="give-check-group__row">
 								<label class="give-check">
-									<input class="give-check__input" type="checkbox">
+									<input class="give-check__input" type="checkbox" id="in-memory-of" />
 									<span class="give-check__text">In honor or memory of someone?</span>
 								</label>
 								<div class="give-in-memory-of" style="display: none">
 									<div class="give-field _simple">
-										<input class="give-field__input" type="text" placeholder="Enter name here">
+										<input class="give-field__input" type="text" placeholder="Enter name here" id="in-memory-of-value" />
 									</div>
 								</div>
 							</div>
@@ -351,7 +351,7 @@
 									<div class="give-field__select">
 										<div class="give-select">
 											<span class="give-select__value">Code</span>
-											<select class="give-select__hidden phone-select"></select>
+											<select class="give-select__hidden phone-select" id="country-phone" name="country-code"></select>
 										</div>
 									</div>
 								</div>
@@ -361,7 +361,7 @@
 						<div class="give-fields-group">
 							<div class="give-fields-group__cell">
 								<div class="give-field">
-									<input class="give-field__input" type="text" name="street" id="give-field-address" autocomplete="street-address" maxlength="25">
+									<input class="give-field__input" type="text" name="street" id="give-field-address" autocomplete="street-address" maxlength="255">
 									<label class="give-field__label" for="give-field-address">Street Address</label>
 									<div class="give-field__left-icon give-icon _street"></div>
 								</div>
@@ -369,7 +369,7 @@
 
 							<div class="give-fields-group__cell">
 								<div class="give-field">
-									<input class="give-field__input" type="text" name="city" id="give-field-city" maxlength="25">
+									<input class="give-field__input" type="text" name="city" id="give-field-city" maxlength="50">
 									<label class="give-field__label" for="give-field-city">City</label>
 									<div class="give-field__left-icon give-icon _location"></div>
 								</div>
@@ -387,7 +387,7 @@
 							<div class="give-fields-group__cell state-select-block">
 								<div class="give-select _grey-border _width-fluid">
 									<span class="give-select__value">State</span>
-									<select class="give-select__hidden state-select"></select>
+									<select class="give-select__hidden state-select" id="country-state" name="state"></select>
 								</div>
 							</div>
 
@@ -455,7 +455,7 @@
 											<div class="give-card__cvv-field">
 												<label for="give-card-cvv" class="give-card__label">CVV code</label>
 												<div class="give-field _no-left-icon _right-icon _solid-bg">
-													<input type="password" class="give-field__input" inputmode="numeric" id="give-card-cvv" name="cvv" maxlength="4" placeholder="CVV">
+													<input type="password" class="give-field__input" inputmode="numeric" id="give-card-cvv" name="cvv" maxlength="4" autocomplete="off" placeholder="CVV">
 													<div class="give-field__right-icon give-icon _eye-closed"></div>
 												</div>
 											</div>
@@ -527,11 +527,48 @@
 
 						<div class="give-payment-form__footer">
 
-							<button type="submit" class="give-submit-button">Confirm</button>
+							<button type="submit" id="submit-payment" class="give-submit-button">Confirm</button>
+							<button type="submit" id="processing-payment" style="display: none" class="give-submit-button">Processing<div class="give-processing"><span>.</span><span>.</span><span>.</span></div></button>
 
 							<div class="give-secured-label"><i class="give-icon _shield"></i> <span>Verified &amp; Secured</span></div>
 						</div>
 					</form>
+
+
+					<div class="give-thank" style="display: none">
+						<button class="give-thank__close give-icon _close" type="button"></button>
+						<div class="give-thank__header">
+							<h3 class="give-thank__title">
+								<span class="give-title _size-lg">Thank you</span>
+								<br><span class="give-title _size-sm">for giving to Life Without Limbs!</span>
+							</h3>
+							<h3 class="give-title _size-xsm">Make sure to download our Mobile App</h3>
+						</div>
+
+						<div class="give-thank__body">
+							<div class="give-thank__picture">
+								<img src="img/mobile@2x.png" height="197" width="249" alt="">
+							</div>
+
+							<div class="give-thank__stores">
+								<a class="give-thank__store-link" href="#" title="Apple Store">
+									<img src="img/svg/app-store.svg" alt="Apple Store">
+								</a>
+								<br>
+								<a class="give-thank__store-link" href="#" title="Google Play Store">
+									<img src="img/svg/google-play.svg" alt="Google Play Store">
+								</a>
+							</div>
+						</div>
+
+						<div class="give-thank__footer">
+							<form class="give-thank-form" action="sendlink.php" method="post" target="_blank">
+								<input class="give-thank-form__input" type="email" name="thank_email" placeholder="Enter your Email">
+								<button class="give-thank-form__button" type="submit">Send me a link</button>
+							</form>
+							<p>Or text <span class="give-thank-sms"><b>LWL</b></span> to <b>41411</b> and we will send link to our app immediately</p>
+						</div>
+					</div>
 
 					</div>
 					</div>
